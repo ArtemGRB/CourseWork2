@@ -14,12 +14,8 @@ import java.util.HashSet;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    QuestionService questionService;
+    private final QuestionService questionService;
 
-    @ExceptionHandler(AmountException.class)
-    public ResponseEntity<String> amountHandler(AmountException e){
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
 
     public ExaminerServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
@@ -29,12 +25,12 @@ public class ExaminerServiceImpl implements ExaminerService {
     public Collection<Question> getQuestion(int amount) {
 
         Collection<Question> allQuestion = questionService.getAll();
-        Collection<Question> result = new HashSet<>();
         if (allQuestion.size() < amount) {
-            throw new AmountException();
+            throw new AmountException("Ведены некорректные данные: хотите получить больше вопросов чем есть в базе");
         } else if (allQuestion.size() == amount) {
             return allQuestion;
         } else {
+            Collection<Question> result = new HashSet<>();
             while (result.size() < amount) {
                 result.add(questionService.getRandomQuestion());
             }

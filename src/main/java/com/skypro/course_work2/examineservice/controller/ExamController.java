@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
-@RequestMapping
+@RequestMapping("/exam")
 public class ExamController {
 
-    ExaminerService examinerService;
+    private final ExaminerService examinerService;
 
     public ExamController(ExaminerService examinerService) {
         this.examinerService = examinerService;
     }
 
-    @GetMapping("exam/get/{amount}")
+    @GetMapping("/get/{amount}")
     public Collection<Question> getQuestions(@PathVariable("amount") int amount){
         return examinerService.getQuestion(amount);
     }
