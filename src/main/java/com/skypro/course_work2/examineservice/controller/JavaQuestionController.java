@@ -34,4 +34,5 @@ public class JavaQuestionController {
         return questionService.remove(new Question(question, answer));
     }
 
+
 }

@@ -25,16 +25,18 @@ public class ExaminerServiceImpl implements ExaminerService {
     public Collection<Question> getQuestion(int amount) {
 
         Collection<Question> allQuestion = questionService.getAll();
-        if (allQuestion.size() < amount) {
-            throw new AmountException("Ведены некорректные данные: хотите получить больше вопросов чем есть в базе");
-        } else if (allQuestion.size() == amount) {
+        if (allQuestion.size() == amount) {
             return allQuestion;
         } else {
             Collection<Question> result = new HashSet<>();
             while (result.size() < amount) {
                 result.add(questionService.getRandomQuestion());
             }
-            return  result;
+            return result;
         }
+    }
+
+    public int getAmountQuestion() {
+        return questionService.getAll().size();
     }
 }
